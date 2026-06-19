@@ -14,8 +14,8 @@ export default function Navbar() {
   // Navigation Links Data
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Startup Details", href: "/startup-details" },
-    { name: "Browse Opportunities", href: "/browse-opportunities" },
+    { name: "Startup Details", href: "/startupDetails" },
+    { name: "Browse Opportunities", href: "/browseOpportunities" },
   ];
 
   const isActive = (href) => pathname === href;
