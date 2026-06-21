@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Card, Button, Input } from "@heroui/react";
+import { Card, Button, Input, Label } from "@heroui/react";
 import { Eye, EyeSlash, ArrowRight } from '@gravity-ui/icons';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { authClient } from "@/lib/auth-client";
 
 const LoginPage = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,16 +34,24 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      console.log("Submitting login credentials:", formData);
+      const { data, error } = await authClient.signIn.email({
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/", 
+      });
 
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (error) {
+        setErrorMessage(error.message || "Invalid email or password.");
+        return;
+      }
 
-      const callbackUrl = '/';
-      router.push(callbackUrl);
+      console.log("Login successful:", data);
+      router.push("/dashboard");
       router.refresh();
 
     } catch (error) {
-      setErrorMessage("Invalid email or password. Please try again.");
+      setErrorMessage("An unexpected error occurred. Please try again.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -50,8 +59,10 @@ const LoginPage = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      console.log("Initiating Google OAuth flow...");
-
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/dashboard",
+      });
     } catch (error) {
       setErrorMessage("Could not connect to Google. Please try again.");
     }
@@ -69,7 +80,7 @@ const LoginPage = () => {
           Log in to continue building on StartupForge
         </p>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-5">
 
           <Input
             type="email"
@@ -83,7 +94,7 @@ const LoginPage = () => {
             className="w-full text-zinc-800 placeholder:text-zinc-400 text-sm"
           />
 
-          <div className="relative w-full flex items-center">
+          <div className="relative w-full">
             <Input
               type={isVisible ? "text" : "password"}
               name="password"
@@ -98,7 +109,7 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={toggleVisibility}
-              className="absolute right-4 z-20 focus:outline-none text-zinc-400 hover:text-zinc-600"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 focus:outline-none"
             >
               {isVisible ? <EyeSlash size={18} /> : <Eye size={18} />}
             </button>
@@ -114,6 +125,7 @@ const LoginPage = () => {
             type="submit"
             className="w-full bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#4f46e5] text-white font-medium text-sm h-12 rounded-xl shadow-sm hover:opacity-95 transition-opacity mt-2"
             isLoading={loading}
+            disabled={loading}
           >
             {loading ? "Signing in..." : "Log In"}
           </Button>
@@ -128,9 +140,9 @@ const LoginPage = () => {
             type="button"
             onClick={handleGoogleLogin}
             variant="bordered"
-            className="w-full bg-white border border-zinc-200 text-zinc-700 font-medium text-sm h-12 rounded-xl shadow-sm hover:bg-zinc-50/80 transition-colors"
+            className="w-full bg-white border border-zinc-200 text-zinc-700 font-medium text-sm h-12 rounded-xl shadow-sm hover:bg-zinc-50 transition-colors"
           >
-            <FcGoogle></FcGoogle>
+            <FcGoogle className="mr-2" />
             Continue with Google
           </Button>
 

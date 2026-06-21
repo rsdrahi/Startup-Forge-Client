@@ -6,10 +6,18 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@heroui/react";
 import { ArrowRight, PersonPlus } from "@gravity-ui/icons";
+import { signOut, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session, isPending } = useSession()
+  console.log("session Data", session, "Is Pending", isPending);
+  const user = session?.user
+
+  const handleSignOut = async () => {
+    await signOut();
+  }
 
   // Navigation Links Data
   const navLinks = [
@@ -81,15 +89,21 @@ export default function Navbar() {
 
           {/* RIGHT SECTION: Auth Actions (Desktop Only) */}
           <div className="hidden sm:flex items-center gap-3">
-            <Link href={'/auth/login'}>
-              <Button
-                variant="ghost"
-                className="border-none hover:bg-default-100 font-medium text-default-700"
-                startContent={<ArrowRight size={16} />}
-              >
-                Login
-              </Button>
-            </Link>
+            {
+              user ?
+                <>
+                  <Button variant="ghost" onClick={handleSignOut}>Log Out</Button>
+                </>
+                :
+                <Link href={'/auth/login'}>
+                  <Button
+                    variant="ghost"
+                    className="border-none hover:bg-default-100 font-medium text-default-700"
+                    startContent={<ArrowRight size={16} />}
+                  >
+                    Login
+                  </Button>
+                </Link>}
             <Link href="/auth/register">
               <Button
                 // as={Link}
@@ -119,16 +133,29 @@ export default function Navbar() {
           ))}
           <hr className="border-default-100 my-2" />
           <div className="flex flex-col gap-3 pt-2">
-            <Link href={'/auth/login'}>
-              <Button
-                variant="outline"
-                className="w-full border-default-200 text-default-700 font-medium"
-                startContent={<ArrowRight size={16} />}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Button>
-            </Link>
+            {
+              user ?
+                <>
+                  <Button
+                    variant="outline"
+                    className="w-full border-default-200 text-default-700 font-medium"
+                    startContent={<ArrowRight size={16} />}
+                    onClick={handleSignOut}
+                  >
+                    Log Out
+                  </Button>
+                </>
+                :
+                <Link href={'/auth/login'}>
+                  <Button
+                    variant="outline"
+                    className="w-full border-default-200 text-default-700 font-medium"
+                    startContent={<ArrowRight size={16} />}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login
+                  </Button>
+                </Link>}
             <Link href={'/auth/register'}>
               <Button
                 className="w-full bg-primary text-primary-foreground font-medium rounded-xl"
