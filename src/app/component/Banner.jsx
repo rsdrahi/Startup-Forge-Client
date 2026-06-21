@@ -17,6 +17,7 @@ const Banner = () => {
       <div className="absolute inset-0 bg-black/40"></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10 w-full">
+        
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* left side */}
