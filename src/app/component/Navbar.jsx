@@ -19,7 +19,6 @@ export default function Navbar() {
     await signOut();
   }
 
-  // Navigation Links Data
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Startup Details", href: "/startupDetails" },
@@ -33,9 +32,8 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
-          {/* LEFT SECTION: Logo & Brand */}
           <div className="flex items-center gap-2">
-            {/* Mobile Hamburger Toggle */}
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center rounded-md p-2 text-default-600 hover:bg-default-100 hover:text-default-900 sm:hidden focus:outline-none"
@@ -71,7 +69,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* MIDDLE SECTION: Navigation Links (Desktop Only) */}
+          {/* nav link desk  */}
           <div className="hidden sm:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
@@ -87,7 +85,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* RIGHT SECTION: Auth Actions (Desktop Only) */}
+          {/* desktop */}
           <div className="hidden sm:flex items-center gap-3">
             {
               user ?
@@ -117,7 +115,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE DRAWER MENU */}
+      {/* mobile */}
       {isMenuOpen && (
         <div className="sm:hidden border-t border-default-100 bg-background px-4 pt-4 pb-6 space-y-3 animate-in fade-in slide-in-from-top-5 duration-200">
           {navLinks.map((link) => (
