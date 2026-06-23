@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea, toast } from "@heroui/react";
+import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from "@heroui/react";
 import { ArrowChevronUp } from "@gravity-ui/icons";
 import { createStartup } from "@/lib/actions/myStartup";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 // import { CloudArrowUp } from "@gravity-ui/icons";
 
 const industries = [
@@ -60,8 +62,9 @@ export default function StartupForm() {
     const payload = { ...data, logo: logoUrl };
     const res = await createStartup(payload);
     if (res.insertedId) {
-      toast.success("Startup posted Successfully")
+      toast.success("Startup posted Successfully!")
       e.target.reset();
+      redirect("/dashboard/founder")
     }
   };
 
