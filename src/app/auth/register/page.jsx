@@ -4,9 +4,11 @@ import { Card, Button, Link, TextField, Label, InputGroup, Input, FieldError } f
 import { Radio, RadioGroup } from "@heroui/react";
 import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
 
+  const router = useRouter()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,6 @@ export default function Register() {
         password,
         name,
         role,
-        callbackURL: "/",
       });
 
       if (authError) {
@@ -43,6 +44,7 @@ export default function Register() {
         setName("");
         setEmail("");
         setPassword("");
+        router.push('/auth/login')
       }
     } catch (err) {
       setError("An unexpected network error occurred.");
