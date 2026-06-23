@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from "@heroui/react";
+import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea, toast } from "@heroui/react";
 import { ArrowChevronUp } from "@gravity-ui/icons";
+import { createStartup } from "@/lib/actions/myStartup";
 // import { CloudArrowUp } from "@gravity-ui/icons";
 
 const industries = [
@@ -52,12 +53,16 @@ export default function StartupForm() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const payload = { ...data, logo: logoUrl };
-    console.log("Submitted Startup Data:", payload);
+    const res = await createStartup(payload);
+    if (res.insertedId) {
+      toast.success("Startup posted Successfully")
+      e.target.reset();
+    }
   };
 
   return (
