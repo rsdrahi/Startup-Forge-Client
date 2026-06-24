@@ -32,8 +32,9 @@ export default function Register() {
     setError("");
     setSuccess("");
     setIsLoading(true);
-    const file = e.target.files;
-    const imageUrl = await uploadImage(file)
+    // const file = e.target.files?.[0];
+    console.log(image, "image state");
+    const imageUrl = await uploadImage(image)
     console.log(imageUrl, "imageUrl");
 
     try {
@@ -114,9 +115,9 @@ export default function Register() {
             <div className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors h-[42px] relative overflow-hidden">
 
               {/* Small thumbnail preview if an image is selected */}
-              {'' ? (
+              {imagePreview ? (
                 <img
-                  src={''}
+                  src={imagePreview}
                   alt="Preview"
                   className="w-6 h-6 rounded-full object-cover border border-zinc-200"
                 />
@@ -127,6 +128,11 @@ export default function Register() {
               <input
                 type="file"
                 accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  setImage(file);
+
+                }}
                 className="w-full h-full absolute inset-0 opacity-0 cursor-pointer file:hidden"
               />
 
