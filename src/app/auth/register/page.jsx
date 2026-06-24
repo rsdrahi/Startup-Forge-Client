@@ -131,7 +131,6 @@ export default function Register() {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   setImage(file);
-
                 }}
                 className="w-full h-full absolute inset-0 opacity-0 cursor-pointer file:hidden"
               />

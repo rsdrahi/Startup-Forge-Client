@@ -3,14 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Button } from "@heroui/react";
+import { usePathname, useRouter } from "next/navigation";
+import { Avatar, Button } from "@heroui/react";
 import { ArrowRight, PersonPlus } from "@gravity-ui/icons";
 import { signOut, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session, isPending } = useSession()
   console.log("session Data", session, "Is Pending", isPending);
   const user = session?.user
@@ -24,6 +25,10 @@ export default function Navbar() {
     { name: "Startup Details", href: "/startupDetails" },
     { name: "Browse Opportunities", href: "/browseOpportunities" },
   ];
+
+  const allLinks = user
+    ? [...navLinks, { name: "Dashboard", href: "/dashboard" }]
+    : navLinks;
 
   const isActive = (href) => pathname === href;
 
@@ -71,7 +76,7 @@ export default function Navbar() {
 
           {/* nav link desk  */}
           <div className="hidden sm:flex items-center gap-6">
-            {navLinks.map((link) => (
+            {allLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -88,82 +93,89 @@ export default function Navbar() {
           {/* desktop */}
           <div className="hidden sm:flex items-center gap-3">
             {
-              user ?
+              user ? (
                 <>
-                  <Button variant="ghost" onClick={handleSignOut}>Log Out</Button>
-                </>
-                :
-                <Link href={'/auth/login'}>
+                  <Link href="/dashboard">
+                    <img
+                      src={user?.image}
+                      name={user?.name}
+                      className="w-10 h-10 rounded-full"
+                    />
+                  </Link>
+
                   <Button
-                    variant="ghost"
-                    className="border-none hover:bg-default-100 font-medium text-default-700"
-                    startContent={<ArrowRight size={16} />}
+                    className="rounded-full"
+                    onClick={handleSignOut}
                   >
-                    Login
+                    Log Out
                   </Button>
-                </Link>}
-            <Link href="/auth/register">
-              <Button
-                // as={Link}
-                className="bg-primary text-primary-foreground font-medium shadow-sm hover:opacity-90 rounded-xl"
-                startContent={<PersonPlus size={16} />}
-              >
-                Register
-              </Button>
-            </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <Button
+                      className="w-full"
+                      startContent={<ArrowRight size={16} />}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+
+                  <Link href="/auth/register">
+                    <Button
+                      className="w-full bg-primary text-primary-foreground"
+                      startContent={<PersonPlus size={16} />}
+                    >
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )
+            }
           </div>
         </div>
       </div>
 
       {/* mobile */}
       {isMenuOpen && (
-        <div className="sm:hidden border-t border-default-100 bg-background px-4 pt-4 pb-6 space-y-3 animate-in fade-in slide-in-from-top-5 duration-200">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMenuOpen(false)}
-              className={`block py-2 text-base font-medium ${isActive(link.href) ? "text-primary font-semibold" : "text-default-700"
-                }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <hr className="border-default-100 my-2" />
-          <div className="flex flex-col gap-3 pt-2">
-            {
-              user ?
-                <>
-                  <Button
-                    variant="outline"
-                    className="w-full border-default-200 text-default-700 font-medium"
-                    startContent={<ArrowRight size={16} />}
-                    onClick={handleSignOut}
-                  >
-                    Log Out
-                  </Button>
-                </>
-                :
-                <Link href={'/auth/login'}>
-                  <Button
-                    variant="outline"
-                    className="w-full border-default-200 text-default-700 font-medium"
-                    startContent={<ArrowRight size={16} />}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Login
-                  </Button>
-                </Link>}
-            <Link href={'/auth/register'}>
-              <Button
-                className="w-full bg-primary text-primary-foreground font-medium rounded-xl"
-                startContent={<PersonPlus size={16} />}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Register
+        <div className="flex flex-col gap-3 pt-2">
+          {user ? (
+            <>
+              <div className="flex justify-center mb-2">
+                <img
+                  src={user.image || "/asset/default-avatar.png"}
+                  alt={user.name}
+                  className="w-16 h-16 rounded-full object-cover border"
+                />
+              </div>
+
+              <Button onClick={handleSignOut} className={'w-full my-2'}>
+                Log Out
               </Button>
-            </Link>
-          </div>
+            </>
+          ) : (
+            <>
+              <Link href="/auth/login">
+                <Button
+                  className="w-full"
+                  startContent={<ArrowRight size={16} />}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Button>
+              </Link>
+
+              <Link href="/auth/register">
+                <Button
+                  className="w-full bg-primary text-primary-foreground"
+                  startContent={<PersonPlus size={16} />}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Register
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       )}
     </nav>
