@@ -1,9 +1,10 @@
 'use client'
-import { useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 import { LayoutSideContentLeft, CirclePlus, ListUl, Gear, House, BriefcaseFill, Person } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { FaHome, FaSignOutAlt } from "react-icons/fa";
 
 export function DashboardSideBar() {
 
@@ -19,6 +20,10 @@ export function DashboardSideBar() {
   ];
 
   const role = session?.user?.role;
+
+  const handleLogout = async () => {
+    await signOut()
+  }
 
   const navContent = <nav className="flex flex-col gap-1">
     {navItems.map((item) => (
@@ -38,6 +43,8 @@ export function DashboardSideBar() {
   return (
     <>
       <aside className="hidden w-64 shrink-0 border-r border-default p-4 lg:block">
+
+        {/* user */}
         <div className="px-6 py-5 border-b border-white/5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-500/60 shrink-0">
@@ -61,6 +68,25 @@ export function DashboardSideBar() {
         </div>
 
         {navContent}
+        
+        {/* Bottom Links */}
+        <div className="px-3 py-4 border-t border-white/5 space-y-1">
+          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-black hover:text-red-400 hover:bg-white/5 transition-all duration-150">
+            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+              <FaHome size={13} />
+            </span>
+            Back to Site
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-black hover:text-red-400 hover:bg-red-500/5 transition-all duration-150 cursor-pointer"
+          >
+            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+              <FaSignOutAlt size={13} />
+            </span>
+            Sign Out
+          </button>
+        </div>
       </aside>
       <Drawer>
         <Button variant="secondary" className={'lg:hidden'}>
