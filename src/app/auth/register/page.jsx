@@ -5,6 +5,7 @@ import { Radio, RadioGroup } from "@heroui/react";
 import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { uploadImage } from "../../../../utlis/uploadImage";
 
 export default function Register() {
 
@@ -13,6 +14,8 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("collaborator");
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("")
 
 
   const [isVisible, setIsVisible] = useState(false);
@@ -23,11 +26,15 @@ export default function Register() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handleSignup = async (e) => {
+
     e.preventDefault();
 
     setError("");
     setSuccess("");
     setIsLoading(true);
+    const file = e.target.files;
+    const imageUrl = await uploadImage(file)
+    console.log(imageUrl, "imageUrl");
 
     try {
       const { data, error: authError } = await signUp.email({
@@ -35,6 +42,7 @@ export default function Register() {
         password,
         name,
         role,
+        image: imageUrl,
       });
 
       if (authError) {
@@ -44,6 +52,8 @@ export default function Register() {
         setName("");
         setEmail("");
         setPassword("");
+        setImage(null)
+        setImagePreview("")
         router.push('/auth/login')
       }
     } catch (err) {
@@ -97,6 +107,33 @@ export default function Register() {
                 className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
               />
             </InputGroup>
+          </TextField>
+
+          <TextField name="avatar" className="flex flex-col gap-1.5">
+            <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Profile Image</Label>
+            <div className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors h-[42px] relative overflow-hidden">
+
+              {/* Small thumbnail preview if an image is selected */}
+              {'' ? (
+                <img
+                  src={''}
+                  alt="Preview"
+                  className="w-6 h-6 rounded-full object-cover border border-zinc-200"
+                />
+              ) : (
+                <span className="text-zinc-400 text-xs select-none">📷</span>
+              )}
+
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full h-full absolute inset-0 opacity-0 cursor-pointer file:hidden"
+              />
+
+              <span className="text-sm text-zinc-400 truncate pointer-events-none">
+                {'' ? image.name : "Upload profile picture"}
+              </span>
+            </div>
           </TextField>
 
           {/* Password Field */}
