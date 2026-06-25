@@ -4,6 +4,8 @@ import { Card, Table, TableContent, TableHeader, TableColumn, TableBody, TableRo
 import { Eye, Pencil, TrashBin } from "@gravity-ui/icons";
 import { useSession } from '@/lib/auth-client';
 import { manageAllOpportunities } from '@/lib/api/opportunities/data';
+import Link from 'next/link';
+import ManageEditModal from './ManageEditModal';
 
 const ManageOpportunitiesTable = () => {
 
@@ -55,12 +57,12 @@ const ManageOpportunitiesTable = () => {
                       <TableCell className="py-4 px-6 align-middle text-slate-300 font-medium">12</TableCell>
                       <TableCell className="py-4 px-6 align-middle">
                         <div className="flex items-center gap-2">
-                          <Button isIconOnly size="sm" variant="light" className="bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-md min-w-[32px] h-[32px]">
-                            <Eye size={16} />
-                          </Button>
-                          <Button isIconOnly size="sm" variant="light" className="bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-md min-w-[32px] h-[32px]">
-                            <Pencil size={16} />
-                          </Button>
+                          <Link href={'/browseOpportunities'}>
+                            <Button isIconOnly size="sm" variant="light" className="bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-md min-w-[32px] h-[32px]">
+                              <Eye size={16} />
+                            </Button>
+                          </Link>
+                          <ManageEditModal opportunity={opportunity}></ManageEditModal>
                           <Button isIconOnly size="sm" variant="light" className="bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-md min-w-[32px] h-[32px]">
                             <TrashBin size={16} />
                           </Button>
