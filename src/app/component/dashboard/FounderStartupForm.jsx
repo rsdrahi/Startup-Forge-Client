@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from "@heroui/react";
 import { ArrowChevronUp } from "@gravity-ui/icons";
-import { createStartup } from "@/lib/actions/myStartup";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
+import { createStartup } from "@/lib/api/startUp/actions";
 // import { CloudArrowUp } from "@gravity-ui/icons";
 
 const industries = [
@@ -79,7 +79,7 @@ export default function FounderStartupForm() {
           <div className="flex flex-col gap-5">
             <TextField isRequired name="startupName" className="w-full">
               <Label className="text-sm font-medium text-gray-700 mb-1 block">Startup Name</Label>
-              <Input placeholder="TechNova" variant="primary" className="rounded-md" />
+              <Input placeholder="Name" variant="primary" className="rounded-md" />
             </TextField>
 
             {/* Industry Select */}
@@ -122,7 +122,7 @@ export default function FounderStartupForm() {
 
             <TextField isRequired type="email" name="founderEmail" className="w-full">
               <Label className="text-sm font-medium text-gray-700 mb-1 block">Founder Email</Label>
-              <Input placeholder="john@example.com" variant="primary" className="rounded-md" />
+              <Input placeholder="Enter Startup Email" variant="primary" className="rounded-md" />
             </TextField>
           </div>
 
@@ -172,7 +172,7 @@ export default function FounderStartupForm() {
             <TextField isRequired name="description" className="w-full">
               <Label className="text-sm font-medium text-gray-700 mb-1 block">Description</Label>
               <TextArea
-                placeholder="TechNova is a platform that connects talented individuals..."
+                placeholder="Enter Message..."
                 variant="primary"
                 rows={5}
                 className="w-full rounded-md border border-gray-200 p-2 focus-visible:outline-indigo-500 resize-y"
