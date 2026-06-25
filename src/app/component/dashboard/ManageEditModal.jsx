@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Envelope, Pencil } from "@gravity-ui/icons";
 import { Button, Form, Input, Label, Modal, Surface, TextField, Select, ListBox, TextArea } from "@heroui/react";
+import { updateOpportunities } from '@/lib/api/opportunities/actions';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const workTypes = [
   { id: "remote", textValue: "Remote" },
@@ -15,20 +18,29 @@ const commitmentLevels = [
   { id: "internship", textValue: "Internship" },
 ];
 
-const ManageEditModal = ({ opportunity }) => {
+const ManageEditModal = ({ opportunity, onUpdate }) => {
 
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const { roleTitle, commitmentLevel, workType, deadline } = opportunity
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
+
     console.log(data, "Data find");
+    const res = await updateOpportunities(data, opportunity?._id);
+    if (res.modifiedCount) {
+      toast.success("Opportunities Update Successfully!")
+      await onUpdate();
+      setIsOpen(false)
+    }
   }
 
   return (
     <div>
-      <Modal className={'w-64'}>
+      <Modal className={'w-64'} open={isOpen} onChange={setIsOpen}>
         <Button isIconOnly size="sm" variant="light" className="bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-md min-w-[32px] h-[32px]">
           <Pencil size={16} />
         </Button>
@@ -107,11 +119,11 @@ const ManageEditModal = ({ opportunity }) => {
 
                     {/* Action Buttons */}
                     <div className="flex justify-end gap-3 w-full mt-8 pt-4 border-t border-gray-100">
-                      <Button type="button" className="px-6 font-medium text-gray-600 bg-gray-100 rounded-md">
+                      <Button type="button" slot="close" className="px-6 font-medium text-gray-600 bg-gray-100 rounded-md">
                         Cancel
                       </Button>
                       <Button type="submit" className="px-6 font-medium text-white bg-[#6366f1] hover:bg-[#4f46e5] rounded-md">
-                        Create Opportunity
+                        Update Opportunity
                       </Button>
                     </div>
                   </Form>

@@ -12,14 +12,15 @@ const ManageOpportunitiesTable = () => {
   const { data: session } = useSession();
   const [manageOpportunities, setManageOpportunities] = useState([])
 
+  const loadOpportunities = async () => {
+    if (!session?.user?.id) return;
+    const opportunitiesData = await manageAllOpportunities(session.user.id);
+    setManageOpportunities(opportunitiesData);
+  };
+
   useEffect(() => {
-    const loadOpportunities = async () => {
-      const opportunitiesData = await manageAllOpportunities(session?.user?.id);
-      setManageOpportunities(opportunitiesData)
-    }
     loadOpportunities();
-  }, [session])
-  console.log(manageOpportunities, "Manage Opportunities");
+  }, [session]);
 
   return (
     <div className="mt-6">
@@ -62,7 +63,7 @@ const ManageOpportunitiesTable = () => {
                               <Eye size={16} />
                             </Button>
                           </Link>
-                          <ManageEditModal opportunity={opportunity}></ManageEditModal>
+                          <ManageEditModal opportunity={opportunity} onUpdate={loadOpportunities}></ManageEditModal>
                           <Button isIconOnly size="sm" variant="light" className="bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-md min-w-[32px] h-[32px]">
                             <TrashBin size={16} />
                           </Button>
