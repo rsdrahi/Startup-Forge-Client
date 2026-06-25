@@ -5,7 +5,7 @@ import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from
 import { ArrowChevronUp } from "@gravity-ui/icons";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
-import { createStartup } from "@/lib/api/startUp/actions";
+import { createStartup, updateStartup } from "@/lib/api/startUp/actions";
 // import { CloudArrowUp } from "@gravity-ui/icons";
 
 const industries = [
@@ -28,6 +28,7 @@ export default function FounderStartupForm() {
   const [isUploading, setIsUploading] = useState(false);
 
   const handleLogoUpload = async (e) => {
+    // const { data: session } = useSession();
     const file = e.target.files[0];
     if (!file) return;
 
@@ -60,7 +61,9 @@ export default function FounderStartupForm() {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const payload = { ...data, logo: logoUrl };
+    // console.log(payload, "payload");
     const res = await createStartup(payload);
+    // console.log(res, "response");
     if (res.insertedId) {
       toast.success("Startup posted Successfully!")
       e.target.reset();
