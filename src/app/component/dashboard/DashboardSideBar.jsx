@@ -4,14 +4,16 @@ import { LayoutSideContentLeft, CirclePlus, ListUl, Gear, House, BriefcaseFill, 
 import { Button, Drawer } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaHome, FaSignOutAlt } from "react-icons/fa";
 
 export function DashboardSideBar() {
 
+  const router = useRouter()
   const { data: session } = useSession();
   console.log(session, "Session");
 
-  const navItems = [
+  const founderNavItems = [
     { icon: House, href: "/dashboard/founder", label: "Overview" },
     { icon: BriefcaseFill, href: "/dashboard/founder/myStartup", label: "My Startup" },
     { icon: CirclePlus, href: "/dashboard/founder/addOpportunity", label: "Add Opportunity" },
@@ -19,14 +21,31 @@ export function DashboardSideBar() {
     { icon: Person, href: "/dashboard/founder/applications", label: "Applications" },
   ];
 
+  const collaboratorNavItems = [
+    { icon: House, href: "/dashboard/collaborator", label: "Overview" },
+    { icon: BriefcaseFill, href: "/dashboard/founder/myApplications", label: "My Applications" },
+    { icon: CirclePlus, href: "/dashboard/founder/profile", label: "profile" },
+  ];
+
+  const adminNavItems = [
+    { icon: House, href: "/dashboard/collaborator", label: "Overview" },
+    { icon: BriefcaseFill, href: "/dashboard/founder/manageUsers", label: "Manage Users" },
+    { icon: CirclePlus, href: "/dashboard/founder/manageStartups", label: "Manage Startups" },
+    { icon: CirclePlus, href: "/dashboard/founder/transactions", label: "Transactions" },
+  ];
+
   const role = session?.user?.role;
+
+  const navItems = role === "Founder" ? founderNavItems : role === "Collaborator" ? collaboratorNavItems : role === "Admin" ? adminNavItems
+    : [];
 
   const handleLogout = async () => {
     await signOut()
+    router.push('/')
   }
 
   const navContent = <nav className="flex flex-col gap-1">
-    {navItems.map((item) => (
+    {navItems?.map((item) => (
       <Link
         href={item.href}
         key={item.label}
@@ -68,7 +87,7 @@ export function DashboardSideBar() {
         </div>
 
         {navContent}
-        
+
         {/* Bottom Links */}
         <div className="px-3 py-4 border-t border-white/5 space-y-1">
           <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-black hover:text-red-400 hover:bg-white/5 transition-all duration-150">

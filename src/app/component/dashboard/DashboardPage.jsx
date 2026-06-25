@@ -34,16 +34,6 @@ export default function DashboardPage() {
       iconBgColor: "bg-purple-100 dark:bg-purple-950/40",
       iconColor: "text-purple-600 dark:text-purple-400",
     },
-    {
-      title: "TechNova",
-      value: "My Startup",
-      linkText: "Manage",
-      linkHref: "/manage-startup",
-      icon: Gear,
-      iconBgColor: "bg-orange-100 dark:bg-orange-950/40",
-      iconColor: "text-orange-600 dark:text-orange-400",
-      isTextCard: true, // Swaps the layout to mirror the TechNova brand card styling 
-    },
   ];
 
   return (

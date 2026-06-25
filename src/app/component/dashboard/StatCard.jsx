@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function StatCard({ statsData = [] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 p-4 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-4 w-full max-w-7xl mx-auto">
       {statsData.map((stat, index) => {
         const IconComponent = stat.icon;
 
