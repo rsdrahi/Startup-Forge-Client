@@ -1,9 +1,13 @@
+import DashboardHeading from '@/app/component/dashboard/DashboardHeading';
 import React from 'react';
 
 const AddOpportunityPage = () => {
   return (
     <div>
-      <h2>Add Opportunities Page</h2>
+      <DashboardHeading
+        title={"Add Opportunity"}
+        description={'Add New Opportunity'}
+      ></DashboardHeading>
     </div>
   );
 };

@@ -1,9 +1,13 @@
+import DashboardHeading from '@/app/component/dashboard/DashboardHeading';
 import React from 'react';
 
 const ApplicationsPage = () => {
   return (
     <div>
-      <h2>Applications Page</h2>
+      <DashboardHeading
+        title={"Applications"}
+        description={'Manage Your All Applications'}
+      ></DashboardHeading>
     </div>
   );
 };

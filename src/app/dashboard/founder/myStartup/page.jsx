@@ -1,9 +1,15 @@
+import DashboardHeading from '@/app/component/dashboard/DashboardHeading';
+import FounderStartupForm from '@/app/component/dashboard/FounderStartupForm';
 import React from 'react';
 
 const FounderStartupPage = () => {
+
   return (
     <div>
-      <h1>Founder Start Up page</h1>
+      <DashboardHeading
+        title={'Start Up Profile'} description={'Update Your Startup Name, Email, Description'}
+      ></DashboardHeading>
+      <FounderStartupForm></FounderStartupForm>
     </div>
   );
 };

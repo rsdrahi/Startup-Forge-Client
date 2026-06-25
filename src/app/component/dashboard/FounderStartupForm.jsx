@@ -23,7 +23,7 @@ const fundingStages = [
   { id: "series_b", textValue: "Series B" },
 ];
 
-export default function StartupForm() {
+export default function FounderStartupForm() {
   const [logoUrl, setLogoUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
@@ -36,13 +36,13 @@ export default function StartupForm() {
     formData.append("image", file);
 
     try {
-      const IMGBBB_API_KEY = "YOUR_IMGBB_API_KEY";
-      const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBBB_API_KEY}`, {
+      const IMGBBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBBB_API_KEY}`, {
         method: "POST",
         body: formData,
       });
 
-      const data = await response.json();
+      const data = await res.json();
       if (data.success) {
         setLogoUrl(data.data.url);
       } else {
@@ -129,7 +129,7 @@ export default function StartupForm() {
           {/* Right Column */}
           <div className="flex flex-col gap-5">
             {/* Logo Upload Box */}
-            {/* <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               <span className="text-sm font-medium text-gray-700">
                 Logo <span className="text-red-500">*</span>
               </span>
@@ -166,7 +166,7 @@ export default function StartupForm() {
                   </div>
                 )}
               </label>
-            </div> */}
+            </div>
 
             {/* Fixed Composable TextArea implementation */}
             <TextField isRequired name="description" className="w-full">
