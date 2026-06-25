@@ -2,6 +2,8 @@
 
 import React from "react";
 import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from "@heroui/react";
+import { addOpportunity } from "@/lib/api/opportunities/actions";
+import toast from "react-hot-toast";
 
 const workTypes = [
   { id: "remote", textValue: "Remote" },
@@ -19,12 +21,18 @@ const commitmentLevels = [
 const AddOpportunityForm = () => {
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
     console.log("Submitted Opportunity Data:", data);
+    const res = await addOpportunity(data);
+    console.log(res, "Response");
+    if (res.insertedId) {
+      toast.success("Add Opportunity Successfully...")
+    }
+    return res;
   };
 
   return (
