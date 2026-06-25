@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
 import { Form, Input, Button, Label, ListBox, Select, TextField, TextArea } from "@heroui/react";
 import { addOpportunity } from "@/lib/api/opportunities/actions";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 const workTypes = [
   { id: "remote", textValue: "Remote" },
@@ -18,19 +19,24 @@ const commitmentLevels = [
   { id: "internship", textValue: "Internship" },
 ];
 
-const AddOpportunityForm = () => {
 
+const AddOpportunityForm = () => {
+  const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const data = {
+      ...Object.fromEntries(formData.entries()),
+      founderId: session?.user?.id,
+    }
 
     console.log("Submitted Opportunity Data:", data);
     const res = await addOpportunity(data);
     console.log(res, "Response");
     if (res.insertedId) {
       toast.success("Add Opportunity Successfully...")
+      redirect('/browseOpportunities')
     }
     return res;
   };

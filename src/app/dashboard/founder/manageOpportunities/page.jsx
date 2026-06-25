@@ -1,4 +1,5 @@
 import DashboardHeading from '@/app/component/dashboard/DashboardHeading';
+import ManageOpportunitiesTable from '@/app/component/dashboard/manageOpportunitiesTable';
 import React from 'react';
 
 const ManageOpportunitiesPage = () => {
@@ -8,6 +9,7 @@ const ManageOpportunitiesPage = () => {
         title={"Manage Opportunity"}
         description={"Manage Your Opportunities"}
       ></DashboardHeading>
+      <ManageOpportunitiesTable></ManageOpportunitiesTable>
     </div>
   );
 };
