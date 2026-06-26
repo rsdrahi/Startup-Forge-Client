@@ -1,5 +1,6 @@
 'use client'
 import { Button, Card, Chip } from '@heroui/react';
+import ApplyModal from './ApplyModal';
 
 const OpportunitiesCard = ({ opportunities }) => {
 
@@ -43,9 +44,9 @@ const OpportunitiesCard = ({ opportunities }) => {
                 {opportunity.deadline}
               </p>
             </div>
-            <Button className={''} variant='outline'>
-              Apply Now
-            </Button>
+            <div className='flex justify-end'>
+              <ApplyModal></ApplyModal>
+            </div>
           </Card>
         ))
       }
