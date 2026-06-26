@@ -120,7 +120,7 @@ const ManageEditModal = ({ opportunity, onUpdate }) => {
                       <Button type="button" slot="close" className="px-6 font-medium text-gray-600 bg-gray-100 rounded-md">
                         Cancel
                       </Button>
-                      <Button type="submit" className="px-6 font-medium text-white bg-[#6366f1] hover:bg-[#4f46e5] rounded-md">
+                      <Button type="submit" slot="close" className="px-6 font-medium text-white bg-[#6366f1] hover:bg-[#4f46e5] rounded-md">
                         Update Opportunity
                       </Button>
                     </div>

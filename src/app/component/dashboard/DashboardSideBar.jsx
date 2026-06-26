@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaHome, FaSignOutAlt } from "react-icons/fa";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 export function DashboardSideBar() {
 
@@ -23,20 +24,20 @@ export function DashboardSideBar() {
 
   const collaboratorNavItems = [
     { icon: House, href: "/dashboard/collaborator", label: "Overview" },
-    { icon: BriefcaseFill, href: "/dashboard/founder/myApplications", label: "My Applications" },
-    { icon: CirclePlus, href: "/dashboard/founder/profile", label: "profile" },
+    { icon: BriefcaseFill, href: "/dashboard/collaborator/myApplications", label: "My Applications" },
+    { icon: CirclePlus, href: "/dashboard/collaborator/profile", label: "profile" },
   ];
 
   const adminNavItems = [
-    { icon: House, href: "/dashboard/collaborator", label: "Overview" },
-    { icon: BriefcaseFill, href: "/dashboard/founder/manageUsers", label: "Manage Users" },
-    { icon: CirclePlus, href: "/dashboard/founder/manageStartups", label: "Manage Startups" },
-    { icon: CirclePlus, href: "/dashboard/founder/transactions", label: "Transactions" },
+    { icon: House, href: "/dashboard/admin", label: "Overview" },
+    { icon: BriefcaseFill, href: "/dashboard/admin/manageUsers", label: "Manage Users" },
+    { icon: CirclePlus, href: "/dashboard/admin/manageStartups", label: "Manage Startups" },
+    { icon: FaBangladeshiTakaSign, href: "/dashboard/admin/transactions", label: "Transactions" },
   ];
 
   const role = session?.user?.role;
 
-  const navItems = role === "Founder" ? founderNavItems : role === "Collaborator" ? collaboratorNavItems : role === "Admin" ? adminNavItems
+  const navItems = role === "Founder" ? founderNavItems : role === "collaborator" ? collaboratorNavItems : role === "Admin" ? adminNavItems
     : [];
 
   const handleLogout = async () => {

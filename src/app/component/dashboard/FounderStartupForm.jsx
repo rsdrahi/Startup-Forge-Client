@@ -6,6 +6,7 @@ import { ArrowChevronUp } from "@gravity-ui/icons";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { createStartup, updateStartup } from "@/lib/api/startUp/actions";
+import Image from "next/image";
 // import { CloudArrowUp } from "@gravity-ui/icons";
 
 const industries = [
@@ -148,7 +149,7 @@ export default function FounderStartupForm() {
 
                 {logoUrl ? (
                   <div className="absolute inset-0 p-2 flex items-center justify-center bg-white">
-                    <img src={logoUrl} alt="Preview" className="h-full object-contain" />
+                    <Image src={logoUrl} alt="Preview" className="h-full object-contain" />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white text-xs font-semibold">
                       Change Logo
                     </div>

@@ -27,8 +27,10 @@ export default function Navbar() {
     { name: "Browse Opportunities", href: "/browseOpportunities" },
   ];
 
+  const dashboardUrl = `/dashboard/${user?.role.toLowerCase()}`;
+
   const allLinks = user
-    ? [...navLinks, { name: "Dashboard", href: "/dashboard" }]
+    ? [...navLinks, { name: "Dashboard", href: dashboardUrl }]
     : navLinks;
 
   const isActive = (href) => pathname === href;
