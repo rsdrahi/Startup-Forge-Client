@@ -6,6 +6,7 @@ import { useSession } from '@/lib/auth-client';
 import { manageAllOpportunities } from '@/lib/api/opportunities/data';
 import Link from 'next/link';
 import ManageEditModal from './ManageEditModal';
+import DeleteOpportunitiesModal from './DeleteOpportunitiesModal';
 
 const ManageOpportunitiesTable = () => {
 
@@ -64,80 +65,12 @@ const ManageOpportunitiesTable = () => {
                             </Button>
                           </Link>
                           <ManageEditModal opportunity={opportunity} onUpdate={loadOpportunities}></ManageEditModal>
-                          <Button isIconOnly size="sm" variant="light" className="bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-md min-w-[32px] h-[32px]">
-                            <TrashBin size={16} />
-                          </Button>
+                          <DeleteOpportunitiesModal opportunity={opportunity} onDelete={loadOpportunities}></DeleteOpportunitiesModal>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))
                 }
-
-
-                {/* Row 2 */}
-
-                {/* <TableRow className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150 last:border-b-0">
-                  <TableCell className="py-4 px-6 align-middle font-bold text-white">
-                    <span className="line-clamp-1 truncate max-w-[150px]">UI/UX Designer</span>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <Chip size="sm" className="font-bold uppercase text-[10px] tracking-wider border px-2.5 py-1 bg-blue-500/10 text-blue-400 border-blue-500/20">
-                      Hybrid
-                    </Chip>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <Chip size="sm" className="font-bold uppercase text-[10px] tracking-wider border px-2.5 py-1 bg-amber-500/10 text-amber-400 border-amber-500/20">
-                      Part-time
-                    </Chip>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle text-slate-300 font-medium">30 May 2024</TableCell>
-                  <TableCell className="py-4 px-6 align-middle text-slate-300 font-medium">8</TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <div className="flex items-center gap-2">
-                      <Button isIconOnly size="sm" variant="light" className="bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <Eye size={16} />
-                      </Button>
-                      <Button isIconOnly size="sm" variant="light" className="bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <Pencil size={16} />
-                      </Button>
-                      <Button isIconOnly size="sm" variant="light" className="bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <TrashBin size={16} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow> */}
-
-                {/* Row 3 */}
-                {/* <TableRow className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150 last:border-b-0">
-                  <TableCell className="py-4 px-6 align-middle font-bold text-white">
-                    <span className="line-clamp-1 truncate max-w-[150px]">Content Writer</span>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <Chip size="sm" className="font-bold uppercase text-[10px] tracking-wider border px-2.5 py-1 bg-indigo-500/10 text-indigo-400 border-indigo-500/20">
-                      Remote
-                    </Chip>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <Chip size="sm" className="font-bold uppercase text-[10px] tracking-wider border px-2.5 py-1 bg-amber-500/10 text-amber-400 border-amber-500/20">
-                      Part-time
-                    </Chip>
-                  </TableCell>
-                  <TableCell className="py-4 px-6 align-middle text-slate-300 font-medium">20 May 2024</TableCell>
-                  <TableCell className="py-4 px-6 align-middle text-slate-300 font-medium">6</TableCell>
-                  <TableCell className="py-4 px-6 align-middle">
-                    <div className="flex items-center gap-2">
-                      <Button isIconOnly size="sm" variant="light" className="bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <Eye size={16} />
-                      </Button>
-                      <Button isIconOnly size="sm" variant="light" className="bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <Pencil size={16} />
-                      </Button>
-                      <Button isIconOnly size="sm" variant="light" className="bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-md min-w-[32px] h-[32px]">
-                        <TrashBin size={16} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow> */}
 
               </TableBody>
             </TableContent>

@@ -21,7 +21,6 @@ const commitmentLevels = [
 const ManageEditModal = ({ opportunity, onUpdate }) => {
 
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
   const { roleTitle, commitmentLevel, workType, deadline } = opportunity
 
   const handleSubmit = async (e) => {
@@ -34,13 +33,12 @@ const ManageEditModal = ({ opportunity, onUpdate }) => {
     if (res.modifiedCount) {
       toast.success("Opportunities Update Successfully!")
       await onUpdate();
-      setIsOpen(false)
     }
   }
 
   return (
     <div>
-      <Modal className={'w-64'} open={isOpen} onChange={setIsOpen}>
+      <Modal className={'w-64'} >
         <Button isIconOnly size="sm" variant="light" className="bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-md min-w-[32px] h-[32px]">
           <Pencil size={16} />
         </Button>
