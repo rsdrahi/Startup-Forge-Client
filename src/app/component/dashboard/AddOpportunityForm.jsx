@@ -28,7 +28,7 @@ const AddOpportunityForm = () => {
     const formData = new FormData(e.currentTarget);
     const data = {
       ...Object.fromEntries(formData.entries()),
-      founderId: session?.user?.id,
+      startupId: session?.user?.id,
     }
 
     console.log("Submitted Opportunity Data:", data);
