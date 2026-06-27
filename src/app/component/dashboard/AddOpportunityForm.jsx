@@ -20,15 +20,14 @@ const commitmentLevels = [
 ];
 
 
-const AddOpportunityForm = () => {
-  const { data: session } = useSession();
+const AddOpportunityForm = ({ startup }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = {
       ...Object.fromEntries(formData.entries()),
-      startupId: session?.user?.id,
+      startupId: startup._id,
     }
 
     console.log("Submitted Opportunity Data:", data);

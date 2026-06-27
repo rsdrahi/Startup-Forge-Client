@@ -4,17 +4,20 @@ import { getMyStartup } from '@/lib/api/startUpsDetails/data';
 import React from 'react';
 
 const AddOpportunityPage = async () => {
-  // const session = await auth();
-  // console.log(session, "StartUp Session");
-  // const startup = await getMyStartup();
-  // console.log(startup, "Start UP");
+ 
+  const founderEmail = "nafi@gmail.com"
+  const startup = await getMyStartup(founderEmail);
+  if (!startup) {
+    return <h1>No startup</h1>
+  }
+
   return (
     <div>
       <DashboardHeading
         title={"Add Opportunity"}
         description={'Add New Opportunity'}
       ></DashboardHeading>
-      <AddOpportunityForm></AddOpportunityForm>
+      <AddOpportunityForm startup={startup}></AddOpportunityForm>
     </div>
   );
 };

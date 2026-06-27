@@ -63,7 +63,7 @@ const MyApplicationsPage = () => {
 
                 <Table.Row id={app._id}>
                   <Table.Cell>
-                    {app.opportunityid}
+                    {app.opportunityId}
                   </Table.Cell>
                   <Table.Cell>
                     {app.email}

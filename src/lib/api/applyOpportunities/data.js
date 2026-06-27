@@ -5,3 +5,8 @@ export const getMyApplications = async (applicantId) => {
   const res = await serverFetch(`/api/applications/users/${applicantId}`)
   return res;
 }
+
+export const getStartupApplications = async (startupId) => {
+  const res = await serverFetch(`/api/applications/startup/${startupId}`)
+  return res;
+}

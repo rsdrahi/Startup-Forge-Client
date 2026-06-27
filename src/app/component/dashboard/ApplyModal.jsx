@@ -14,6 +14,8 @@ const ApplyModal = ({ session, opportunity }) => {
     const data = {
       ...Object.fromEntries(formData.entries()),
       applicantId: session?.user?.id,
+      startupId: opportunity.startupId,
+      opportunityId: opportunity._id,
     }
     console.log(data, "form data");
 
@@ -44,7 +46,7 @@ const ApplyModal = ({ session, opportunity }) => {
                 <Surface variant="default">
                   <Form onSubmit={handleApplySubmit} className="flex flex-col gap-4">
 
-                    <TextField className="w-full" name="opportunityid" type="num" variant="secondary">
+                    <TextField className="w-full" name="opportunityId" type="num" variant="secondary">
                       <Label>Opportunity ID</Label>
                       <Input placeholder="Enter your name" value={opportunity?._id} readOnly />
                     </TextField>
