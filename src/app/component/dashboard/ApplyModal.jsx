@@ -4,13 +4,17 @@ import { Envelope } from "@gravity-ui/icons";
 import { Button, Form, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
 
-const ApplyModal = () => {
+const ApplyModal = ({ session, opportunity }) => {
 
   const handleApplySubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+
+    const data = {
+      ...Object.fromEntries(formData.entries()),
+      applicantId: session?.user?.id,
+    }
     console.log(data, "form data");
 
     const res = await applyForOpportunities(data);
@@ -42,22 +46,22 @@ const ApplyModal = () => {
 
                     <TextField className="w-full" name="opportunityid" type="num" variant="secondary">
                       <Label>Opportunity ID</Label>
-                      <Input placeholder="Enter your name" />
+                      <Input placeholder="Enter your name" value={opportunity?._id} readOnly />
                     </TextField>
 
                     <TextField className="w-full" name="email" type="email" variant="secondary">
                       <Label>Applicant Email</Label>
-                      <Input placeholder="Enter your email" />
+                      <Input placeholder="Enter your email" value={session?.user?.email} readOnly />
                     </TextField>
 
                     <TextField className="w-full" name="url" type="url" variant="secondary">
                       <Label>Portfolio Link</Label>
-                      <Input placeholder="Portfolio url" />
+                      <Input placeholder="https://portfolio.com" />
                     </TextField>
 
                     <TextField className="w-full" name="message" type="text" variant="secondary">
                       <Label>Motivation Message</Label>
-                      <Input placeholder="Enter your company name" />
+                      <Input placeholder="Why should we hire you?" />
                     </TextField>
 
                     <Modal.Footer>

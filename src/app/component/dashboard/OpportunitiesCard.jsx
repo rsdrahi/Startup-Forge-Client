@@ -1,9 +1,11 @@
 'use client'
 import { Button, Card, Chip } from '@heroui/react';
 import ApplyModal from './ApplyModal';
+import { useSession } from '@/lib/auth-client';
 
 const OpportunitiesCard = ({ opportunities }) => {
 
+  const { data: session } = useSession();
   console.log(opportunities, "Opportunities");
 
   return (
@@ -45,7 +47,10 @@ const OpportunitiesCard = ({ opportunities }) => {
               </p>
             </div>
             <div className='flex justify-end'>
-              <ApplyModal></ApplyModal>
+              <ApplyModal
+                session={session}
+                opportunity={opportunity}
+              ></ApplyModal>
             </div>
           </Card>
         ))
