@@ -1,16 +1,44 @@
 'use client'
 import ProfileCard from '@/app/component/dashboard/ProfileCard';
+import { createCollaboratorProfile } from '@/lib/api/collaboratorProfile/actions';
+import { getCollaboratorProfile } from '@/lib/api/collaboratorProfile/data';
 import { useSession } from '@/lib/auth-client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ProfilePage = () => {
 
   const { data: session } = useSession();
-  const profile = {
-    name: session?.user?.name,
-    image: session?.user?.image,
-    skills: "",
-    bio: ""
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const createProfile = async () => {
+      if (!session?.user?.email) return;
+
+      let profileData = await getCollaboratorProfile(session.user.email);
+
+      if (!profileData) {
+        await createCollaboratorProfile({
+          name: session.user.name,
+          email: session.user.email,
+          image: session.user.image,
+          skills: "",
+          bio: "",
+        });
+        profileData = await getCollaboratorProfile(session.user.email);
+      }
+
+      setProfile(profileData);
+    };
+
+    createProfile();
+  }, [session]);
+
+  if (!profile) {
+    return (
+      <div className="w-full min-h-[calc(100vh-80px)] flex items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   return (

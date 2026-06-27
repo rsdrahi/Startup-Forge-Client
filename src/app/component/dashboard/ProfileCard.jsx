@@ -1,6 +1,7 @@
 import { Avatar, Button, Chip, Card } from '@heroui/react';
 import Image from 'next/image';
 import React from 'react';
+import EditProfileModal from './EditProfileModal';
 
 const ProfileCard = ({ profile }) => {
 
@@ -12,9 +13,9 @@ const ProfileCard = ({ profile }) => {
         <div className="flex flex-col items-center">
 
           <div className='h-24 w-24 rounded-full overflow-hidden'>
-            <Image
-              src={profile.image}
-              alt={profile.name}
+            <img
+              src={profile?.image}
+              alt={profile?.name}
               height={96}
               width={96}
               className='object-cover rounded-full'
@@ -78,9 +79,7 @@ const ProfileCard = ({ profile }) => {
 
           <div className="w-full flex justify-end mt-8">
 
-            <Button color="primary">
-              Edit Profile
-            </Button>
+            <EditProfileModal></EditProfileModal>
 
           </div>
 
