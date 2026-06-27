@@ -1,9 +1,30 @@
 'use client'
+import { updateApplicationsStatus } from '@/lib/api/applyOpportunities/actions';
 import { Button, Chip, Table } from '@heroui/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const FounderApplicationsTable = ({ applications }) => {
-  console.log(applications, "Application");
+  // console.log(applications, "Application");
+
+  const router = useRouter();
+  const handleAccept = async (id) => {
+    const res = await updateApplicationsStatus(id, "accepted");
+    if (res.modifiedCount > 0) {
+      toast.success("Application Accept")
+      router.refresh();
+    }
+  };
+
+  const handleReject = async (id) => {
+    const res = await updateApplicationsStatus(id, "rejected");
+    if (res.modifiedCount > 0) {
+      toast.success("Application Rejected")
+      router.refresh();
+    }
+  };
+
   return (
     <div>
       <Table>
@@ -55,7 +76,18 @@ const FounderApplicationsTable = ({ applications }) => {
                   <Table.Cell>{app.status}</Table.Cell>
 
                   <Table.Cell>
-                    Action
+                    <Chip
+                      color={
+                        app.status === "accepted"
+                          ? "success"
+                          : app.status === "rejected"
+                            ? "danger"
+                            : "warning"
+                      }
+                      variant="flat"
+                    >
+                      {app.status}
+                    </Chip>
                   </Table.Cell>
                 </Table.Row>
               )}
