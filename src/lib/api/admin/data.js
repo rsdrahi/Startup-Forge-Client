@@ -14,3 +14,8 @@ export const getTotalOpportunities = async () => {
   const res = await serverFetch('/api/admin/opportunities/count');
   return res;
 }
+
+export const getAllUsers = async () => {
+  const res = await serverFetch('/api/admin/users');
+  return res;
+}

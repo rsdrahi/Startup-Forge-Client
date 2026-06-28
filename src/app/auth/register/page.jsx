@@ -6,6 +6,7 @@ import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { uploadImage } from "../../../../utlis/uploadImage";
+import { setDefaultUsersStatus } from "@/lib/api/admin/actions";
 
 export default function Register() {
 
@@ -46,9 +47,13 @@ export default function Register() {
         image: imageUrl,
       });
 
+      console.log(data, "Register Data");
+      console.log(authError, "Auth Error");
       if (authError) {
         setError(authError.message || "Something went wrong during signup.");
       } else {
+        const result = await setDefaultUsersStatus(email);
+        console.log(result, 'Result');
         setSuccess("Account created successfully! Welcome.");
         setName("");
         setEmail("");
