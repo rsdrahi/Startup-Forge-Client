@@ -4,12 +4,12 @@ import React from "react";
 import { Briefcase, FileText, Persons, Gear } from "@gravity-ui/icons";
 import StatCard from "./StatCard";
 
-export default function DashboardPage() {
+export default function DashboardPage({ stats }) {
   // Example Dataset for a "Founder" user role
   const founderStats = [
     {
       title: "Total Opportunities",
-      value: "12",
+      value: stats.totalOpportunities,
       linkText: "View all",
       linkHref: "/opportunities",
       icon: Briefcase,
@@ -18,7 +18,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Applications",
-      value: "48",
+      value: stats.totalApplications,
       linkText: "View all",
       linkHref: "/applications",
       icon: FileText,
@@ -27,7 +27,7 @@ export default function DashboardPage() {
     },
     {
       title: "Accepted Members",
-      value: "15",
+      value: stats.acceptedMembers,
       linkText: "View all",
       linkHref: "/members",
       icon: Persons,

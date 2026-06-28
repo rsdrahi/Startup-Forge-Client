@@ -19,3 +19,8 @@ export const getAllOpportunities = async () => {
   const res = await serverFetch('/api/browseOpportunities')
   return res;
 }
+
+export const getTotalOpportunities = async (startupId) => {
+  const res = await serverFetch(`/api/opportunities/count/${startupId}`)
+  return res;
+}

@@ -1,28 +1,41 @@
-import DashboardHeading from '@/app/component/dashboard/DashboardHeading';
-import FounderApplicationsTable from '@/app/component/dashboard/FounderApplicationsTable';
-import { getStartupApplications } from '@/lib/api/applyOpportunities/data';
-import { getMyStartup } from '@/lib/api/startUpsDetails/data';
-import React from 'react';
+"use client";
+import DashboardHeading from "@/app/component/dashboard/DashboardHeading";
+import FounderApplicationsTable from "@/app/component/dashboard/FounderApplicationsTable";
+import { getStartupApplications } from "@/lib/api/applyOpportunities/data";
+import { getMyStartup } from "@/lib/api/startUpsDetails/data";
+import { useSession } from "@/lib/auth-client";
+import React, { useEffect, useState } from "react";
 
-const ApplicationsPage = async () => {
+const ApplicationsPage = () => {
 
-  const founderEmail = 'nafi@gmail.com'
-  const startup = await getMyStartup(founderEmail);
-  console.log(startup, "Startup");
-  if (!startup) {
-    return <h1>Not Found</h1>
-  }
-  console.log(startup._id, "StartupId");
-  const applications = await getStartupApplications(startup._id)
-  console.log(applications, "applications");
+  const { data: session } = useSession();
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+
+    const loadApplications = async () => {
+
+      if (!session?.user?.email) return;
+      const startup = await getMyStartup(session.user.email);
+      if (!startup) return;
+      const data = await getStartupApplications(startup._id);
+      setApplications(data);
+    };
+    loadApplications();
+  }, [session]);
 
   return (
     <div>
+
       <DashboardHeading
-        title={"Applications"}
-        description={'Manage Your All Applications'}
-      ></DashboardHeading>
-      <FounderApplicationsTable applications={applications}></FounderApplicationsTable>
+        title="Applications"
+        description="Manage Your All Applications"
+      />
+
+      <FounderApplicationsTable
+        applications={applications}
+      />
+
     </div>
   );
 };
