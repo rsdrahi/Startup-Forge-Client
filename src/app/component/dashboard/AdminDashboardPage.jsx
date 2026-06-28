@@ -1,15 +1,15 @@
+import React from 'react';
+import StatCard from './StatCard';
+import { Briefcase, FileText, Persons } from '@gravity-ui/icons';
 
-import React from "react";
-// Gravity UI Icons
-import { Briefcase, FileText, Persons, Gear } from "@gravity-ui/icons";
-import StatCard from "./StatCard";
+const AdminDashboardPage = ({ stats }) => {
 
-export default function DashboardPage({ stats }) {
+  const { totalOpportunities, totalStartups, totalUsers } = stats
 
-  const founderStats = [
+  const adminStats = [
     {
-      title: "Total Opportunities",
-      value: stats.totalOpportunities,
+      title: "Total Users",
+      value: totalUsers,
       linkText: "View all",
       linkHref: "/opportunities",
       icon: Briefcase,
@@ -17,8 +17,8 @@ export default function DashboardPage({ stats }) {
       iconColor: "text-indigo-600 dark:text-indigo-400",
     },
     {
-      title: "Total Applications",
-      value: stats.totalApplications,
+      title: "Total Startups",
+      value: totalStartups,
       linkText: "View all",
       linkHref: "/applications",
       icon: FileText,
@@ -26,8 +26,8 @@ export default function DashboardPage({ stats }) {
       iconColor: "text-emerald-600 dark:text-emerald-400",
     },
     {
-      title: "Accepted Members",
-      value: stats.acceptedMembers,
+      title: "Total Opportunities",
+      value: totalOpportunities,
       linkText: "View all",
       linkHref: "/members",
       icon: Persons,
@@ -41,7 +41,9 @@ export default function DashboardPage({ stats }) {
       <div className="mb-6 max-w-7xl mx-auto px-4">
         <h1 className="text-2xl font-bold text-foreground">Overview Dashboard</h1>
       </div>
-      <StatCard statsData={founderStats} />
+      <StatCard statsData={adminStats} />
     </div>
   );
-}
+};
+
+export default AdminDashboardPage;
