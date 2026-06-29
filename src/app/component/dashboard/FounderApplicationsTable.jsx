@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
 
-const FounderApplicationsTable = ({ applications }) => {
+const FounderApplicationsTable = ({ applications, refreshApplications }) => {
   // console.log(applications, "Application");
 
   const router = useRouter();
@@ -30,31 +30,13 @@ const FounderApplicationsTable = ({ applications }) => {
       <Table>
         <Table.ScrollContainer>
           <Table.Content aria-label="Founder Applications">
-
             <Table.Header>
-              <Table.Column isRowHeader>
-                Opportunity ID
-              </Table.Column>
-
-              <Table.Column>
-                Email
-              </Table.Column>
-
-              <Table.Column>
-                Portfolio
-              </Table.Column>
-
-              <Table.Column>
-                Message
-              </Table.Column>
-
-              <Table.Column>
-                Status
-              </Table.Column>
-
-              <Table.Column>
-                Action
-              </Table.Column>
+              <Table.Column isRowHeader>Opportunity ID</Table.Column>
+              <Table.Column>Email</Table.Column>
+              <Table.Column>Portfolio</Table.Column>
+              <Table.Column>Message</Table.Column>
+              <Table.Column>Status</Table.Column>
+              <Table.Column>Action</Table.Column>
             </Table.Header>
 
             <Table.Body
@@ -69,11 +51,18 @@ const FounderApplicationsTable = ({ applications }) => {
 
                   <Table.Cell>{app.email}</Table.Cell>
 
-                  <Table.Cell>{app.url}</Table.Cell>
+                  <Table.Cell>
+                    <a
+                      href={app.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      Portfolio
+                    </a>
+                  </Table.Cell>
 
                   <Table.Cell>{app.message}</Table.Cell>
-
-                  <Table.Cell>{app.status}</Table.Cell>
 
                   <Table.Cell>
                     <Chip
@@ -89,10 +78,35 @@ const FounderApplicationsTable = ({ applications }) => {
                       {app.status}
                     </Chip>
                   </Table.Cell>
+
+                  <Table.Cell>
+                    {app.status === "pending" ? (
+                      <div className="flex gap-2">
+                        <Button
+                          color="success"
+                          size="sm"
+                          onPress={() => handleAccept(app._id)}
+                        >
+                          Accept
+                        </Button>
+
+                        <Button
+                          color="danger"
+                          size="sm"
+                          onPress={() => handleReject(app._id)}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    ) : (
+                      <span className="text-sm text-gray-500">
+                        No Action
+                      </span>
+                    )}
+                  </Table.Cell>
                 </Table.Row>
               )}
             </Table.Body>
-
           </Table.Content>
         </Table.ScrollContainer>
       </Table>

@@ -7,6 +7,7 @@ import { manageAllOpportunities } from '@/lib/api/opportunities/data';
 import Link from 'next/link';
 import ManageEditModal from './ManageEditModal';
 import DeleteOpportunitiesModal from './DeleteOpportunitiesModal';
+import { getMyStartup } from '@/lib/api/startUpsDetails/data';
 
 const ManageOpportunitiesTable = () => {
 
@@ -14,8 +15,13 @@ const ManageOpportunitiesTable = () => {
   const [manageOpportunities, setManageOpportunities] = useState([])
 
   const loadOpportunities = async () => {
-    if (!session?.user?.id) return;
-    const opportunitiesData = await manageAllOpportunities(session.user.id);
+    if (!session?.user?.email) return;
+    const startup = await getMyStartup(session.user.email);
+    console.log(startup, "Startup");
+    if (!startup) return;
+    const opportunitiesData = await manageAllOpportunities(startup._id);
+    console.log(startup._id, "Startup Id");
+    console.log(opportunitiesData, "Opportunities");
     setManageOpportunities(opportunitiesData);
   };
 

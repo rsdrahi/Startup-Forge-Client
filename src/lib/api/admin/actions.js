@@ -10,3 +10,13 @@ export const setDefaultUsersStatus = async (email) => {
   return res;
 }
 
+export const approvedStartup = async (id) => {
+  const res = await serverMutation(`/api/admin/startups/${id}`, "PATCH");
+  return res;
+}
+
+export const deleteStartup = async (id) => {
+  const res = await serverMutation(`/api/admin/startups/${id}`, "DELETE");
+  return res;
+}
+

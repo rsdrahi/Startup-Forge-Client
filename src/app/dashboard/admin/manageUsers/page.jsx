@@ -13,7 +13,7 @@ const ManageUsers = () => {
   }
 
   useEffect(() => {
-    loadUse rs();
+    loadUsers();
   }, []);
 
   return (

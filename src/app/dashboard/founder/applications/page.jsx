@@ -11,16 +11,15 @@ const ApplicationsPage = () => {
   const { data: session } = useSession();
   const [applications, setApplications] = useState([]);
 
+  const loadApplications = async () => {
+
+    if (!session?.user?.email) return;
+    const startup = await getMyStartup(session.user.email);
+    if (!startup) return;
+    const data = await getStartupApplications(startup._id);
+    setApplications(data);
+  };
   useEffect(() => {
-
-    const loadApplications = async () => {
-
-      if (!session?.user?.email) return;
-      const startup = await getMyStartup(session.user.email);
-      if (!startup) return;
-      const data = await getStartupApplications(startup._id);
-      setApplications(data);
-    };
     loadApplications();
   }, [session]);
 
@@ -34,6 +33,7 @@ const ApplicationsPage = () => {
 
       <FounderApplicationsTable
         applications={applications}
+        refreshApplications={loadApplications}
       />
 
     </div>

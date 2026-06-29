@@ -19,3 +19,8 @@ export const getAllUsers = async () => {
   const res = await serverFetch('/api/admin/users');
   return res;
 }
+
+export const getAllStartups = async () => {
+  const res = await serverFetch('/api/admin/startups');
+  return res;
+}
